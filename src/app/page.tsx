@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { ArrowRight, Scan, Box, Layers, Zap } from "lucide-react";
 import LightRays from "@/components/ui/LightRays";
 import BlurText from "@/components/ui/blur-text";
+import TeamSection from "@/components/team-section";
 
 export default function Home() {
   return (
@@ -119,6 +120,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <TeamSection />
 
         {/* Key Stats */}
         <section className="bg-muted/50 px-4 py-16 sm:px-6 lg:px-8">
