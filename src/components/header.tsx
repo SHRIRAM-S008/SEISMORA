@@ -10,6 +10,7 @@ export const Header = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
+    { href: "/analysis/upload", label: "Analysis" },
     { href: "/technology", label: "Technology" },
     { href: "/viewer", label: "3D Viewer" },
     { href: "/products", label: "Products" },
@@ -24,9 +25,9 @@ export const Header = () => {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <img 
-            src="/logo.jpeg" 
-            alt="SEISMORA Logo" 
+          <img
+            src="/logo.jpeg"
+            alt="SEISMORA Logo"
             className="h-10 w-10 rounded-lg object-cover"
           />
           <span className="text-xl font-bold text-foreground">SEISMORA</span>

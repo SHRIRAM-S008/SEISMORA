@@ -131,9 +131,8 @@ interface TooltipProps {
 const Tooltip: React.FC<TooltipProps> = ({ item, hoveredItem }) => (
   <div
     role="tooltip"
-    className={`absolute -top-12 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-lg backdrop-blur-md border text-xs font-medium whitespace-nowrap transition-all duration-300 ease-out pointer-events-none bg-popover text-popover-foreground border-border ${
-      hoveredItem === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-    }`}
+    className={`absolute -top-12 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-lg backdrop-blur-md border text-xs font-medium whitespace-nowrap transition-all duration-300 ease-out pointer-events-none bg-popover text-popover-foreground border-border ${hoveredItem === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+      }`}
     style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}
   >
     {item.label}
@@ -143,7 +142,7 @@ const Tooltip: React.FC<TooltipProps> = ({ item, hoveredItem }) => (
 
 const teamMembers: GlassmorphismProfileCardProps[] = [
   {
-    avatarUrl: "/team/member1.jpg",
+    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M1",
     name: "Member One",
     title: "Team Lead",
     bio: "Leading SEISMORA with a focus on innovation and user-centric prosthetic solutions.",
@@ -158,7 +157,7 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "/team/member2.jpg",
+    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M2",
     name: "Member Two",
     title: "Hardware Engineer",
     bio: "Specialist in IR scanning and LiDAR integration for accurate limb capture.",
@@ -173,7 +172,7 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "/team/member3.jpg",
+    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M3",
     name: "Member Three",
     title: "Software Engineer",
     bio: "Building the SEISMORA platform with robust 3D reconstruction pipelines.",
@@ -188,7 +187,7 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "/team/member4.jpg",
+    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M4",
     name: "Member Four",
     title: "Clinical Expert",
     bio: "Ensuring SEISMORA aligns with real-world prosthetic clinic workflows.",
@@ -203,7 +202,7 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "/team/member5.jpg",
+    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M5",
     name: "Member Five",
     title: "UI/UX Designer",
     bio: "Designing intuitive interfaces for clinicians and patients alike.",
