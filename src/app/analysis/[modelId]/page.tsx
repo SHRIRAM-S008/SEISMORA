@@ -8,7 +8,6 @@ import { calculateAllMeasurements } from '@/lib/geometry/measurements';
 import { cylindricalUnwrap } from '@/lib/geometry/unwrap';
 import { mergeVertices } from '@/lib/geometry/utils';
 import ModelViewer3D from '@/components/viewer/ModelViewer3D';
-import CrossSectionSlider from '@/components/viewer/CrossSectionSlider';
 import MeasurementPanel from '@/components/measurements/MeasurementPanel';
 import FlatPatternCanvas from '@/components/unwrap/FlatPatternCanvas';
 import SVGExportButton from '@/components/unwrap/SVGExportButton';
@@ -33,11 +32,12 @@ export default function AnalysisPage() {
             setModel({
                 id: 'demo-model',
                 hospital_id: 'demo',
-                filename: 'demo_model.stl',
-                file_url: '/demo_model.stl',
+                filename: 'socket-model.obj',
+                file_url: '/socket-model.obj',
                 file_size: 0,
-                file_format: 'stl',
-                model_type: 'limb',
+                file_format: 'obj',
+                model_type: 'socket',
+                upload_source: 'manual',
                 status: 'completed',
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString()
@@ -107,7 +107,31 @@ export default function AnalysisPage() {
         setIsCalculating(true);
 
         try {
-            const unwrappedPattern = cylindricalUnwrap(geometry, modelId);
+            // Create basic topology from geometry
+            const positions = geometry.getAttribute('position').array as Float32Array;
+            const indices = geometry.getIndex()?.array as Uint32Array;
+            
+            if (!indices) {
+                throw new Error('Geometry must be indexed for unwrapping');
+            }
+            
+            const topology = {
+                vertices: positions,
+                indices: indices,
+                edges: new Map(),
+                boundaries: [],
+                genus: 0
+            };
+            
+            const unwrappedPattern = await cylindricalUnwrap(geometry, modelId, topology, {
+                method: 'cylindrical' as any,
+                seamPlacement: 'auto',
+                distortionTolerance: 0.1,
+                enableRelaxation: true,
+                maxIterations: 100,
+                preserveAspectRatio: true,
+                manufacturingMode: false
+            });
             setPattern(unwrappedPattern);
 
             // Save to database only if not demo
@@ -205,19 +229,14 @@ export default function AnalysisPage() {
 
             {/* Main Content */}
             <div className="container mx-auto px-4 py-6">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                     {/* Main Viewer Area */}
-                    <div className="lg:col-span-2 space-y-4">
+                    <div className="space-y-4">
                         {activeTab === '3d' && (
-                            <>
-                                <ModelViewer3D
-                                    fileUrl={model?.file_url || ''}
-                                    onGeometryLoaded={handleGeometryLoaded}
-                                />
-                                {geometry && (
-                                    <CrossSectionSlider geometry={geometry} />
-                                )}
-                            </>
+                            <ModelViewer3D
+                                fileUrl={model?.file_url || ''}
+                                onGeometryLoaded={handleGeometryLoaded}
+                            />
                         )}
 
                         {activeTab === 'flat' && pattern && (
@@ -227,25 +246,22 @@ export default function AnalysisPage() {
                                 showSeam={true}
                             />
                         )}
-                    </div>
 
-                    {/* Side Panel */}
-                    <div className="lg:col-span-1">
+                        {/* Measurement Panel below the model */}
                         <MeasurementPanel
                             measurements={measurements}
                             isLoading={isCalculating && !measurements}
                         />
+                    </div>
 
-                        {/* Quick Tips / Guide */}
-                        <div className="mt-6 bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
-                            <h4 className="font-semibold mb-2">Instructions</h4>
-                            <ul className="list-disc pl-4 space-y-1">
-                                <li>Rotate the model to inspect geometry</li>
-                                <li>Use the slider to check diameter at specific heights</li>
-                                <li>Click <span className="font-bold">Unwrap Model</span> to generate the cutting pattern</li>
-                                <li>Download PDF for the full clinical report</li>
-                            </ul>
-                        </div>
+                    {/* Instructions */}
+                    <div className="bg-blue-50 p-4 rounded-lg text-sm text-blue-800">
+                        <h4 className="font-semibold mb-2">Instructions</h4>
+                        <ul className="list-disc pl-4 space-y-1">
+                            <li>Rotate the model to inspect geometry</li>
+                            <li>Click <span className="font-bold">Unwrap Model</span> to generate the cutting pattern</li>
+                            <li>Download PDF for the full clinical report</li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -42,7 +42,7 @@ const GlassmorphismProfileCard: React.FC<GlassmorphismProfileCardProps> = ({
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <div className="w-24 h-24 mb-4 rounded-full p-1 border-2 border-white/20">
+        <div className="w-32 h-32 mb-6 rounded-full p-1 border-2 border-white/20">
           <img
             src={avatarUrl}
             alt={`${name}'s Avatar`}
@@ -50,7 +50,7 @@ const GlassmorphismProfileCard: React.FC<GlassmorphismProfileCardProps> = ({
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.onerror = null;
-              target.src = `https://placehold.co/96x96/6366f1/white?text=${name.charAt(0)}`;
+              target.src = `https://placehold.co/128x128/6366f1/white?text=${name.charAt(0)}`;
             }}
           />
         </div>
@@ -142,10 +142,10 @@ const Tooltip: React.FC<TooltipProps> = ({ item, hoveredItem }) => (
 
 const teamMembers: GlassmorphismProfileCardProps[] = [
   {
-    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M1",
-    name: "Member One",
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=CP",
+    name: "CHARULATHA P",
     title: "Team Lead",
-    bio: "Leading SEISMORA with a focus on innovation and user-centric prosthetic solutions.",
+    bio: "Leading SEISMORA with a focus on innovation and user-centric prosthetic solutions, coordinating all aspects of the project.",
     socialLinks: [
       { id: "github", icon: Github, label: "GitHub", href: "#" },
       { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
@@ -157,10 +157,10 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M2",
-    name: "Member Two",
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=DR",
+    name: "Dhinesh R",
     title: "Hardware Engineer",
-    bio: "Specialist in IR scanning and LiDAR integration for accurate limb capture.",
+    bio: "Specialist in LiDAR integration and FSR sensor arrays for accurate limb capture and pressure mapping.",
     socialLinks: [
       { id: "github", icon: Github, label: "GitHub", href: "#" },
       { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
@@ -172,10 +172,10 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M3",
-    name: "Member Three",
-    title: "Software Engineer",
-    bio: "Building the SEISMORA platform with robust 3D reconstruction pipelines.",
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=KM",
+    name: "Kaiuf M",
+    title: "Design Engineer",
+    bio: "Creating innovative prosthetic socket designs and optimizing the 3D reconstruction pipeline for perfect-fit solutions.",
     socialLinks: [
       { id: "github", icon: Github, label: "GitHub", href: "#" },
       { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
@@ -187,10 +187,10 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M4",
-    name: "Member Four",
-    title: "Clinical Expert",
-    bio: "Ensuring SEISMORA aligns with real-world prosthetic clinic workflows.",
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=DK",
+    name: "Dave Kanye Deffodil K",
+    title: "Biomedical Specialist",
+    bio: "Ensuring SEISMORA aligns with clinical standards and real-world prosthetic care workflows for optimal patient outcomes.",
     socialLinks: [
       { id: "github", icon: Github, label: "GitHub", href: "#" },
       { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
@@ -202,10 +202,25 @@ const teamMembers: GlassmorphismProfileCardProps[] = [
     },
   },
   {
-    avatarUrl: "https://placehold.co/96x96/6366f1/white?text=M5",
-    name: "Member Five",
-    title: "UI/UX Designer",
-    bio: "Designing intuitive interfaces for clinicians and patients alike.",
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=SP",
+    name: "Surya Prasad A",
+    title: "Fabrication Engineer",
+    bio: "Expert in prosthetic manufacturing processes, 3D printing, and thermoplastic molding for socket production.",
+    socialLinks: [
+      { id: "github", icon: Github, label: "GitHub", href: "#" },
+      { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
+      { id: "twitter", icon: Twitter, label: "Twitter", href: "#" },
+    ],
+    actionButton: {
+      text: "Contact",
+      href: "#",
+    },
+  },
+  {
+    avatarUrl: "https://placehold.co/120x120/6366f1/white?text=KS",
+    name: "Kanimozhi S",
+    title: "Financial Analyst",
+    bio: "Managing project finances, cost optimization, and ensuring SEISMORA remains accessible and affordable for clinics.",
     socialLinks: [
       { id: "github", icon: Github, label: "GitHub", href: "#" },
       { id: "linkedin", icon: Linkedin, label: "LinkedIn", href: "#" },
@@ -231,7 +246,7 @@ const TeamSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {teamMembers.map((member) => (
             <GlassmorphismProfileCard key={member.name} {...member} />
           ))}

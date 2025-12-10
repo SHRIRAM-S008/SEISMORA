@@ -33,8 +33,12 @@ export default function ModelViewer3D({ fileUrl, onGeometryLoaded }: ModelViewer
             )}
 
             <Canvas
-                camera={{ position: [0, 0, 100], fov: 50 }}
-                onCreated={() => setIsLoading(false)}
+                camera={{ position: [0, 0, 10], fov: 50, near: 0.1, far: 1000 }}
+                onCreated={({ camera }) => {
+                    camera.up.set(0, 0, 1); // Set Z as up direction
+                    camera.updateProjectionMatrix();
+                    setIsLoading(false);
+                }}
             >
                 <Suspense fallback={null}>
                     <Scene
@@ -77,13 +81,30 @@ function Scene({ fileUrl, onGeometryLoaded, onError }: SceneProps) {
                 loadedGeometry.center();
                 loadedGeometry.computeVertexNormals();
 
-                // Auto-fit camera to model
+                // Auto-fit camera to model with better scaling
                 loadedGeometry.computeBoundingBox();
                 const box = loadedGeometry.boundingBox!;
                 const size = new THREE.Vector3();
                 box.getSize(size);
-                const maxDim = Math.max(size.x, size.y, size.z);
-                camera.position.z = maxDim * 2.5;
+                
+                // Calculate the bounding sphere for better fitting
+                const center = new THREE.Vector3();
+                box.getCenter(center);
+                const radius = box.getBoundingSphere(new THREE.Sphere(center)).radius;
+                
+                // Adjust camera position based on model size
+                const fov = 50; // Field of view in degrees
+                const distance = radius / Math.tan((fov * Math.PI) / 360);
+                camera.position.z = distance * 1.2; // Reduce padding for closer view
+                
+                // Scale the geometry to a reasonable size
+                const targetSize = 10; // Target size for the largest dimension
+                const scale = targetSize / Math.max(size.x, size.y, size.z);
+                loadedGeometry.scale(scale, scale, scale);
+                
+                // Update the bounding box after scaling
+                loadedGeometry.computeBoundingBox();
+                loadedGeometry.computeBoundingSphere();
 
                 setGeometry(loadedGeometry);
                 onGeometryLoaded?.(loadedGeometry);
@@ -124,16 +145,16 @@ function Scene({ fileUrl, onGeometryLoaded, onError }: SceneProps) {
 
             {/* Grid */}
             <Grid
-                position={[0, -50, 0]}
-                args={[200, 200]}
-                cellSize={10}
+                position={[0, 0, 0]}
+                args={[20, 20]}
+                cellSize={0.5}
                 cellThickness={0.5}
-                cellColor="#444"
-                sectionSize={50}
+                cellColor="#6f6f6f"
+                sectionSize={2}
                 sectionThickness={1}
-                sectionColor="#666"
-                fadeDistance={400}
-                fadeStrength={1}
+                sectionColor="#9d4b4b"
+                fadeDistance={50}
+                fadeStrength={1.5}
             />
 
             {/* Controls */}

@@ -3,19 +3,24 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { useState } from "react";
-import { RotateCw, ZoomIn, ZoomOut, Maximize2, Info } from "lucide-react";
+import { RotateCw, ZoomIn, ZoomOut, Maximize2, Info, Play, Pause } from "lucide-react";
 import LightRays from "@/components/ui/LightRays";
 import BlurText from "@/components/ui/blur-text";
+import dynamic from 'next/dynamic';
+
+// Dynamically import SocketViewer to avoid SSR issues with Three.js
+const SocketViewer = dynamic(() => import('@/components/viewer/SocketViewer'), { ssr: false });
 
 export default function ViewerPage() {
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(100);
   const [showInfo, setShowInfo] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(true);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/50 px-4 py-12 sm:px-6 lg:px-8">
@@ -34,7 +39,7 @@ export default function ViewerPage() {
               className="opacity-40"
             />
           </div>
-          
+
           <div className="mx-auto max-w-7xl relative z-10 w-full">
             <div className="text-center flex flex-col items-center justify-center space-y-6 py-8">
               <BlurText
@@ -59,18 +64,8 @@ export default function ViewerPage() {
               <div className="lg:col-span-2">
                 <div className="rounded-lg border border-border bg-card overflow-hidden">
                   {/* Viewer Canvas */}
-                  <div 
-                    className="relative aspect-video bg-muted/30 flex items-center justify-center"
-                    style={{ transform: `rotate(${rotation}deg) scale(${zoom / 100})` }}
-                  >
-                    <div className="text-center">
-                      <div className="w-48 h-48 mx-auto mb-4 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Maximize2 className="h-24 w-24 text-primary/50" />
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Interactive 3D prosthetic socket model
-                      </p>
-                    </div>
+                  <div className="relative aspect-video bg-muted/30">
+                    <SocketViewer autoRotate={autoRotate} className="w-full h-full" />
                   </div>
 
                   {/* Controls */}
@@ -113,10 +108,27 @@ export default function ViewerPage() {
                       </div>
 
                       <button
+                        onClick={() => setAutoRotate(!autoRotate)}
+                        className={`rounded-lg border border-border px-3 py-2 text-sm transition-colors ${autoRotate ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
+                          }`}
+                      >
+                        {autoRotate ? (
+                          <>
+                            <Pause className="h-4 w-4 inline mr-1" />
+                            Pause
+                          </>
+                        ) : (
+                          <>
+                            <Play className="h-4 w-4 inline mr-1" />
+                            Rotate
+                          </>
+                        )}
+                      </button>
+
+                      <button
                         onClick={() => setShowInfo(!showInfo)}
-                        className={`ml-auto rounded-lg border border-border px-3 py-2 text-sm transition-colors ${
-                          showInfo ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
-                        }`}
+                        className={`ml-auto rounded-lg border border-border px-3 py-2 text-sm transition-colors ${showInfo ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
+                          }`}
                       >
                         <Info className="h-4 w-4 inline mr-1" />
                         Info

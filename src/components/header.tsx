@@ -17,7 +17,6 @@ export const Header = () => {
     { href: "/services", label: "Services" },
     { href: "/knowledge", label: "Knowledge Center" },
     { href: "/contact", label: "Contact" },
-    { href: "/about", label: "About" },
   ];
 
   return (
@@ -44,6 +43,15 @@ export const Header = () => {
               {link.label}
             </Link>
           ))}
+        </div>
+
+        {/* SIH Logo */}
+        <div className="hidden md:flex items-center">
+          <img
+            src="/sih-logo.png"
+            alt="Smart India Hackathon"
+            className="h-12 w-auto object-contain"
+          />
         </div>
 
         {/* Mobile Menu Button */}

@@ -43,13 +43,13 @@ export default function AlertsPanel({ alerts }: AlertsPanelProps) {
   }
 
   return (
-    <div className="bg-card border rounded-lg shadow-sm">
+    <div className="bg-card border rounded-lg shadow-sm h-full flex flex-col">
       <div className="p-6 border-b">
         <h2 className="text-lg font-semibold text-foreground">Alerts</h2>
         <p className="text-sm text-muted-foreground mt-1">System notifications</p>
       </div>
-      
-      <div className="p-6">
+
+      <div className="p-6 flex-1 overflow-auto">
         {alerts.length === 0 ? (
           <div className="text-center py-8">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-muted">
@@ -65,7 +65,7 @@ export default function AlertsPanel({ alerts }: AlertsPanelProps) {
             {alerts.map((alert) => {
               const Icon = getAlertIcon(alert.type)
               const colorClass = getAlertColor(alert.type)
-              
+
               return (
                 <div
                   key={alert.id}

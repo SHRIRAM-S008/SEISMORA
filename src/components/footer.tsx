@@ -15,7 +15,7 @@ export const Footer = () => {
               <span className="text-xl font-bold text-foreground">SEISMORA</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Advanced prosthetic technology platform using IR scanning, LiDAR mapping, and 3D modeling.
+              Advanced prosthetic technology platform using LiDAR mapping, FSR pressure sensing, and 3D modeling.
             </p>
           </div>
 
@@ -53,11 +53,6 @@ export const Footer = () => {
               <li>
                 <Link href="/knowledge" className="text-muted-foreground hover:text-foreground">
                   Knowledge Center
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-muted-foreground hover:text-foreground">
-                  About Us
                 </Link>
               </li>
               <li>

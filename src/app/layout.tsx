@@ -6,7 +6,7 @@ import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "SEISMORA - Advanced Prosthetic Technology Platform",
-  description: "Revolutionizing prosthetic care with IR scanning, LiDAR depth mapping, and 3D model reconstruction for perfect-fit socket inserts.",
+  description: "Revolutionizing prosthetic care with LiDAR depth mapping, FSR pressure sensing, and advanced 3D model reconstruction for perfect-fit socket inserts.",
   icons: {
     icon: '/logo.jpeg'
   }
