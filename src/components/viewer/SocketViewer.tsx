@@ -9,13 +9,14 @@ import * as THREE from 'three';
 
 interface SocketModelProps {
     autoRotate?: boolean;
+    modelPath?: string;
 }
 
-function SocketModel({ autoRotate = true }: SocketModelProps) {
+function SocketModel({ autoRotate = true, modelPath = '/socket-model.obj' }: SocketModelProps) {
     const meshRef = useRef<THREE.Group>(null);
 
-    // Load the OBJ model
-    const obj = useLoader(OBJLoader, '/socket-model.obj');
+    // Load the OBJ model (default socket-model, can be overridden)
+    const obj = useLoader(OBJLoader, modelPath);
 
     // Auto-rotate the model
     useFrame((state, delta) => {
@@ -43,9 +44,10 @@ function SocketModel({ autoRotate = true }: SocketModelProps) {
 interface SocketViewerProps {
     autoRotate?: boolean;
     className?: string;
+    modelPath?: string;
 }
 
-export default function SocketViewer({ autoRotate = true, className = "" }: SocketViewerProps) {
+export default function SocketViewer({ autoRotate = true, className = "", modelPath }: SocketViewerProps) {
     return (
         <div className={`w-full h-full ${className}`}>
             <Canvas
@@ -64,7 +66,7 @@ export default function SocketViewer({ autoRotate = true, className = "" }: Sock
                     <Environment preset="studio" />
 
                     {/* The 3D Model */}
-                    <SocketModel autoRotate={autoRotate} />
+                    <SocketModel autoRotate={autoRotate} modelPath={modelPath} />
 
                     {/* Controls */}
                     <OrbitControls

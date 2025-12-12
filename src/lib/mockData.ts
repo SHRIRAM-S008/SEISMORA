@@ -10,10 +10,29 @@ export interface SensorData {
 export function generateMockData(count: number = 50): SensorData[] {
   const data: SensorData[] = []
   const now = new Date()
+  const yesterday = new Date(now)
+  yesterday.setDate(now.getDate() - 1)
   
+  const yesterdayCount = Math.min(7, count)
+
   for (let i = 0; i < count; i++) {
-    const timestamp = new Date(now.getTime() - (count - i) * 2000) // 2 seconds apart
-    
+    let timestamp: Date
+
+    if (i < yesterdayCount) {
+      // Spread 7 readings across yesterday
+      const hoursOffset = Math.floor((24 / yesterdayCount) * i)
+      timestamp = new Date(yesterday)
+      timestamp.setHours(0 + hoursOffset, 0, 0, 0)
+    } else {
+      // Remaining readings are from today
+      const indexToday = i - yesterdayCount
+      const todayCount = count - yesterdayCount
+      const minutesOffset = Math.floor((24 * 60 / Math.max(todayCount, 1)) * indexToday)
+      timestamp = new Date(now)
+      timestamp.setHours(0, 0, 0, 0)
+      timestamp = new Date(timestamp.getTime() + minutesOffset * 60 * 1000)
+    }
+
     data.push({
       id: `mock-${i}`,
       timestamp: timestamp.toISOString(),

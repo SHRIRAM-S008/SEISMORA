@@ -137,43 +137,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {/* Prosthetic Socket */}
-              <div className="rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-lg hover:scale-105">
-                <div className="aspect-square mb-4 rounded-lg overflow-hidden bg-muted/50 flex items-center justify-center">
-                  <img
-                    src="/prosthetic-socket.png"
-                    alt="Prosthetic Socket 3D Model"
-                    className="w-full h-full object-contain p-4"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-card-foreground mb-2">Prosthetic Socket</h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Custom-designed 3D models with precision fit and comfort optimization. We use this for creating patient-specific socket designs based on LiDAR scans.
-                </p>
-                <div className="space-y-2 mb-3">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">Multi-layer cushioning design</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">Pressure-optimized geometry</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">STL/OBJ export ready</span>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-primary">₹8,000</span>
-                    <span className="text-xs text-muted-foreground">per socket</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">Material + fabrication included</p>
-                </div>
-              </div>
-
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {/* Hot Air Gun */}
               <div className="rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-lg hover:scale-105">
                 <div className="aspect-square mb-4 rounded-lg overflow-hidden bg-muted/50 flex items-center justify-center">
@@ -210,16 +174,16 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* LiDAR Sensor */}
+              {/* LiDAR Scanner */}
               <div className="rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-lg hover:scale-105">
                 <div className="aspect-square mb-4 rounded-lg overflow-hidden bg-muted/50 flex items-center justify-center">
                   <img
                     src="/lidar-sensor.png"
-                    alt="LiDAR Sensor"
+                    alt="LiDAR Scanner"
                     className="w-full h-full object-contain p-4"
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-card-foreground mb-2">LiDAR Sensor</h3>
+                <h3 className="text-lg font-semibold text-card-foreground mb-2">LiDAR Scanner</h3>
                 <p className="text-sm text-muted-foreground mb-3">
                   Advanced depth mapping technology. We use this to capture precise 3D limb geometry in under 5 seconds with sub-millimeter accuracy.
                 </p>
@@ -239,46 +203,10 @@ export default function Home() {
                 </div>
                 <div className="pt-3 border-t border-border">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-primary">₹15,000</span>
+                    <span className="text-2xl font-bold text-primary">₹11,000</span>
                     <span className="text-xs text-muted-foreground">one-time</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">Includes software & calibration</p>
-                </div>
-              </div>
-
-              {/* 3D Printer */}
-              <div className="rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:shadow-lg hover:scale-105">
-                <div className="aspect-square mb-4 rounded-lg overflow-hidden bg-muted/50 flex items-center justify-center">
-                  <img
-                    src="/3d-printer.png"
-                    alt="3D Printer"
-                    className="w-full h-full object-contain p-4"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-card-foreground mb-2">3D Printer</h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Medical-grade additive manufacturing. We use this to print socket prototypes, inserts, and custom components directly from our 3D models.
-                </p>
-                <div className="space-y-2 mb-3">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">Build volume: 220x220x250mm</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">Layer resolution: 50 microns</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground">Multi-material support</span>
-                  </div>
-                </div>
-                <div className="pt-3 border-t border-border">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-primary">₹25,000</span>
-                    <span className="text-xs text-muted-foreground">one-time</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">Medical-grade certified</p>
                 </div>
               </div>
             </div>
@@ -290,7 +218,7 @@ export default function Home() {
                 <p className="text-muted-foreground mb-6">Get everything you need to start digital prosthetic manufacturing</p>
                 <div className="flex items-baseline justify-center gap-3 mb-4">
                   <span className="text-sm text-muted-foreground line-through">₹51,500</span>
-                  <span className="text-4xl font-bold text-primary">₹43,500</span>
+                  <span className="text-4xl font-bold text-primary">₹10,000</span>
                   <span className="text-sm text-muted-foreground">one-time setup</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">

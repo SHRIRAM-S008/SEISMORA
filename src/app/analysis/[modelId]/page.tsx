@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import * as THREE from 'three';
 import { supabase } from '@/lib/supabase/client';
 import { calculateAllMeasurements } from '@/lib/geometry/measurements';
@@ -15,6 +16,9 @@ import SVGExportButton from '@/components/unwrap/SVGExportButton';
 import { downloadReport } from '@/lib/pdf/generateReport';
 import type { Model3D, Measurements3D, UnwrappedPattern } from '@/types';
 import demoUnwrapImage from '../../../../WhatsApp Image 2025-12-11 at 23.01.35.jpeg';
+
+// Dynamically import SocketViewer to avoid SSR issues with Three.js
+const SocketViewer = dynamic(() => import('@/components/viewer/SocketViewer'), { ssr: false });
 
 export default function AnalysisPage() {
     const params = useParams();
@@ -243,11 +247,14 @@ export default function AnalysisPage() {
 
                         {activeTab === 'flat' && modelId === 'demo-model' && (
                             <div className="bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
-                                <Image
-                                    src={demoUnwrapImage}
-                                    alt="Demo unwrapped pattern"
-                                    className="max-h-[700px] w-auto object-contain"
-                                />
+                                {/* Show flat pattern OBJ when unwrapped for demo model */}
+                                <div className="w-full h-[700px]">
+                                    <SocketViewer
+                                        autoRotate={false}
+                                        className="w-full h-full"
+                                        modelPath="/unwarppping.obj"
+                                    />
+                                </div>
                             </div>
                         )}
 

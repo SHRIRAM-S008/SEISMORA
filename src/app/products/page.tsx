@@ -14,7 +14,7 @@ export default function ProductsPage() {
     {
       id: "ethaflex-sheets",
       name: "Ethaflex Sheets",
-      price: "₹2,500",
+      price: "₹1,500",
       image: "🔲",
       description: "High-quality EVA foam sheets for prosthetic inserts. Durable, flexible, and comfortable.",
       features: [
@@ -38,22 +38,9 @@ export default function ProductsPage() {
       ]
     },
     {
-      id: "protective-padding",
-      name: "Protective Padding",
-      price: "₹1,200",
-      image: "🛡️",
-      description: "Soft gel padding for high-pressure zones. Reduces friction and enhances comfort.",
-      features: [
-        "Medical-grade silicone gel",
-        "Washable and reusable",
-        "Self-adhesive backing",
-        "Multiple sizes"
-      ]
-    },
-    {
       id: "toolkit",
-      name: "Prosthetic Toolkit",
-      price: "₹8,500",
+      name: "Prosthetic Socket Cleaner",
+      price: "₹1,000",
       image: "🧰",
       description: "Complete toolkit for prosthetic technicians. Includes measurement tools, cutters, and adhesives.",
       features: [
@@ -80,7 +67,7 @@ export default function ProductsPage() {
     {
       id: "calibration-kit",
       name: "FSR Calibration Kit",
-      price: "₹6,200",
+      price: "₹1,500",
       image: "⚙️",
       description: "Pressure sensor calibration and testing equipment. Ensures accurate readings.",
       features: [
@@ -88,6 +75,45 @@ export default function ProductsPage() {
         "Calibration software",
         "Testing protocols",
         "Certification included"
+      ]
+    },
+    {
+      id: "polyurethane",
+      name: "Polyurethane Sheets",
+      price: "₹1,500",
+      image: "🧱",
+      description: "Durable polyurethane sheets ideal for load-bearing regions in prosthetic sockets.",
+      features: [
+        "High impact resistance",
+        "Good fatigue strength",
+        "Suitable for socket reinforcement",
+        "Easy to cut and shape"
+      ]
+    },
+    {
+      id: "tpe-material",
+      name: "TPE Liner Material",
+      price: "₹2,000",
+      image: "🧬",
+      description: "Thermoplastic elastomer (TPE) material for comfortable, flexible socket liners.",
+      features: [
+        "Skin-friendly and soft",
+        "Heat-moldable",
+        "Good shock absorption",
+        "Ideal for inner liners"
+      ]
+    },
+    {
+      id: "silicon-material",
+      name: "Silicon Gel Sheets",
+      price: "₹3,500",
+      image: "🪫",
+      description: "Medical-grade silicon gel for high-pressure relief and targeted cushioning.",
+      features: [
+        "Excellent pressure redistribution",
+        "Washable and reusable",
+        "Self-adhesive backing",
+        "Comfort for sensitive areas"
       ]
     }
   ];
