@@ -7,6 +7,9 @@ import { RotateCw, ZoomIn, ZoomOut, Maximize2, Info, Play, Pause } from "lucide-
 import LightRays from "@/components/ui/LightRays";
 import BlurText from "@/components/ui/blur-text";
 import dynamic from 'next/dynamic';
+import { LayerViewer } from "@/components/viewer/LayerViewer";
+import { LayerControls } from "@/components/viewer/LayerControls";
+import { SocketBuildAnimation } from "@/components/viewer/SocketBuildAnimation";
 
 // Dynamically import SocketViewer to avoid SSR issues with Three.js
 const SocketViewer = dynamic(() => import('@/components/viewer/SocketViewer'), { ssr: false });
@@ -16,6 +19,7 @@ export default function ViewerPage() {
   const [zoom, setZoom] = useState(100);
   const [showInfo, setShowInfo] = useState(true);
   const [autoRotate, setAutoRotate] = useState(true);
+  const [layerMode, setLayerMode] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -59,82 +63,90 @@ export default function ViewerPage() {
         {/* Viewer Section */}
         <section className="px-4 py-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-7xl">
+            <LayerControls layerMode={layerMode} setLayerMode={setLayerMode} />
+            
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* Main Viewer */}
               <div className="lg:col-span-2">
                 <div className="rounded-lg border border-border bg-card overflow-hidden">
                   {/* Viewer Canvas */}
                   <div className="relative aspect-video bg-muted/30">
-                    <SocketViewer autoRotate={autoRotate} className="w-full h-full" />
+                    {layerMode ? (
+                      <SocketBuildAnimation />
+                    ) : (
+                      <SocketViewer autoRotate={autoRotate} className="w-full h-full" />
+                    )}
                   </div>
 
-                  {/* Controls */}
-                  <div className="border-t border-border p-4 bg-card">
-                    <div className="flex flex-wrap items-center gap-4">
-                      <div className="flex items-center gap-2">
+                  {/* Controls - Only show in normal mode */}
+                  {!layerMode && (
+                    <div className="border-t border-border p-4 bg-card">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setRotation(r => r - 90)}
+                            className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
+                            aria-label="Rotate left"
+                          >
+                            <RotateCw className="h-5 w-5" />
+                          </button>
+                          <button
+                            onClick={() => setRotation(0)}
+                            className="rounded-lg border border-border bg-background px-3 py-2 text-sm hover:bg-accent transition-colors"
+                          >
+                            Reset
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setZoom(z => Math.max(50, z - 10))}
+                            className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
+                            aria-label="Zoom out"
+                          >
+                            <ZoomOut className="h-5 w-5" />
+                          </button>
+                          <span className="text-sm font-medium min-w-[4rem] text-center">
+                            {zoom}%
+                          </span>
+                          <button
+                            onClick={() => setZoom(z => Math.min(200, z + 10))}
+                            className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
+                            aria-label="Zoom in"
+                          >
+                            <ZoomIn className="h-5 w-5" />
+                          </button>
+                        </div>
+
                         <button
-                          onClick={() => setRotation(r => r - 90)}
-                          className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
-                          aria-label="Rotate left"
+                          onClick={() => setAutoRotate(!autoRotate)}
+                          className={`rounded-lg border border-border px-3 py-2 text-sm transition-colors ${autoRotate ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
+                            }`}
                         >
-                          <RotateCw className="h-5 w-5" />
+                          {autoRotate ? (
+                            <>
+                              <Pause className="h-4 w-4 inline mr-1" />
+                              Pause
+                            </>
+                          ) : (
+                            <>
+                              <Play className="h-4 w-4 inline mr-1" />
+                              Rotate
+                            </>
+                          )}
                         </button>
+
                         <button
-                          onClick={() => setRotation(0)}
-                          className="rounded-lg border border-border bg-background px-3 py-2 text-sm hover:bg-accent transition-colors"
+                          onClick={() => setShowInfo(!showInfo)}
+                          className={`ml-auto rounded-lg border border-border px-3 py-2 text-sm transition-colors ${showInfo ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
+                            }`}
                         >
-                          Reset
+                          <Info className="h-4 w-4 inline mr-1" />
+                          Info
                         </button>
                       </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => setZoom(z => Math.max(50, z - 10))}
-                          className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
-                          aria-label="Zoom out"
-                        >
-                          <ZoomOut className="h-5 w-5" />
-                        </button>
-                        <span className="text-sm font-medium min-w-[4rem] text-center">
-                          {zoom}%
-                        </span>
-                        <button
-                          onClick={() => setZoom(z => Math.min(200, z + 10))}
-                          className="rounded-lg border border-border bg-background p-2 hover:bg-accent transition-colors"
-                          aria-label="Zoom in"
-                        >
-                          <ZoomIn className="h-5 w-5" />
-                        </button>
-                      </div>
-
-                      <button
-                        onClick={() => setAutoRotate(!autoRotate)}
-                        className={`rounded-lg border border-border px-3 py-2 text-sm transition-colors ${autoRotate ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
-                          }`}
-                      >
-                        {autoRotate ? (
-                          <>
-                            <Pause className="h-4 w-4 inline mr-1" />
-                            Pause
-                          </>
-                        ) : (
-                          <>
-                            <Play className="h-4 w-4 inline mr-1" />
-                            Rotate
-                          </>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => setShowInfo(!showInfo)}
-                        className={`ml-auto rounded-lg border border-border px-3 py-2 text-sm transition-colors ${showInfo ? "bg-primary text-primary-foreground" : "bg-background hover:bg-accent"
-                          }`}
-                      >
-                        <Info className="h-4 w-4 inline mr-1" />
-                        Info
-                      </button>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
 

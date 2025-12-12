@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import * as THREE from 'three';
 import { supabase } from '@/lib/supabase/client';
 import { calculateAllMeasurements } from '@/lib/geometry/measurements';
@@ -13,6 +14,7 @@ import FlatPatternCanvas from '@/components/unwrap/FlatPatternCanvas';
 import SVGExportButton from '@/components/unwrap/SVGExportButton';
 import { downloadReport } from '@/lib/pdf/generateReport';
 import type { Model3D, Measurements3D, UnwrappedPattern } from '@/types';
+import demoUnwrapImage from '../../../../WhatsApp Image 2025-12-11 at 23.01.35.jpeg';
 
 export default function AnalysisPage() {
     const params = useParams();
@@ -209,7 +211,7 @@ export default function AnalysisPage() {
                         </button>
                         <button
                             onClick={() => setActiveTab('flat')}
-                            disabled={!pattern}
+                            disabled={modelId !== 'demo-model' && !pattern}
                             className={`py-3 px-4 border-b-2 transition-colors ${activeTab === 'flat'
                                 ? 'border-blue-500 text-blue-600'
                                 : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -239,7 +241,17 @@ export default function AnalysisPage() {
                             />
                         )}
 
-                        {activeTab === 'flat' && pattern && (
+                        {activeTab === 'flat' && modelId === 'demo-model' && (
+                            <div className="bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+                                <Image
+                                    src={demoUnwrapImage}
+                                    alt="Demo unwrapped pattern"
+                                    className="max-h-[700px] w-auto object-contain"
+                                />
+                            </div>
+                        )}
+
+                        {activeTab === 'flat' && modelId !== 'demo-model' && pattern && (
                             <FlatPatternCanvas
                                 pattern={pattern}
                                 showGrid={true}
